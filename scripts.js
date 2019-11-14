@@ -1,7 +1,9 @@
 "use strict";
+
 function rollDice(sides){
     return Math.ceil(Math.random() * sides)
 }
+
 let playerHp = 100;
 let opponentHp = 100;
 let turnCounter = 0
@@ -15,16 +17,18 @@ function whoGoFirst(choice){
     if(user>cpu){
         let decision = playerCommand(prompt("You go first. Choose attack, defend, heal, or cast."));
         let cpuTurn = opponentCommand(alert("Opponent goes next"));
-        
-        console.log(playerHp, opponentHp)
+        alert("Your current HP:" + " " + playerHp);
+        alert("Opponent's current HP:" + " " + opponentHp);
+        console.log("Your current HP:" + " " + " " + playerHp, "Opponent's current HP:" + " " + opponentHp);
         return decision, cpuTurn;
     }
     else if(user<cpu){
         turnCounter ++;
         let cpuDecision = opponentCommand(alert("Opponent goes first"));
         let yourTurn = playerCommand(prompt("It's your turn. Choose attack, defend, heal, or cast."));
-        
-        console.log(playerHp, opponentHp)
+        alert("Your current HP:" + " " + playerHp);
+        alert("Opponent's current HP:" + " " + opponentHp);
+        console.log("Your current HP:" + " " + " " + playerHp, "Opponent's current HP:" + " " + opponentHp);
         return cpuDecision, yourTurn;
     }
     else{
@@ -34,7 +38,7 @@ function whoGoFirst(choice){
 }
 
 function attack(){
-    let attackDmg = rollDice(6);
+    let attackDmg = rollDice(6) * 2;
     return attackDmg;
 }
 
@@ -55,11 +59,11 @@ function opponentDefend(){
 }
 
 function playerHeal(){
-    return rollDice(7);
+    return rollDice(7) * 2;
 }
 
 function opponentHeal(){
-    return rollDice(7);
+    return rollDice(7) * 2;
 }
 
 function userCast(){
@@ -74,7 +78,7 @@ function opponentCast(){
 function playerCommand(call){
     if(call === "attack"){
         opponentHp -= attack();
-        alert("You attack delt " + attack() + " damage.");
+        alert("You attack is " + attack() + " damage.");
         return opponentHp;
     }
     else if (call === "defend"){
@@ -96,11 +100,16 @@ function playerCommand(call){
         alert("Preparing to cast a spell");
         return opponentHp -= userCast();
     }
-console.log(playerHp, opponentHp)
+    alert("Your current HP:" + " " + playerHp);
+    alert("Opponent's current HP:" + " " + opponentHp);
+    console.log("Your current HP:" + " " + " " + playerHp, "Opponent's current HP:" + " " + opponentHp);
 }
 
 function opponentCommand(){
     return cpuDecide();
+    alert("Your current HP:" + " " + playerHp);
+    alert("Opponent's current HP:" + " " + opponentHp);
+    console.log("Your current HP:" + " " + " " + playerHp, "Opponent's current HP:" + " " + opponentHp);
 }
 
 function cpuDecide(){
@@ -120,7 +129,7 @@ function cpuDecide(){
             break;
         case 3:
             if(opponentHp===100){
-                return cpuDecide()
+                return cpuDecide();
             }
             else{
                 opponentHeal();
@@ -164,67 +173,78 @@ function spellCast(magic){
             return magic;
             break;
         case 6:
-            magic = 0
+            magic = 0;
             alert("Sorry, the spell failed");
-            return magic
+            return magic;
             break;
         case 7:
-            magic = 0
+            magic = 0;
             alert("Sorry, the spell failed");
-            return magic
+            return magic;
             break;
         case 8:
             magic = 0
             alert("Sorry, the spell failed");
-            return magic
+            return magic;
             break;
     }
 }
 
 function turnOrder(){
     if(turnCounter == 0){
-        playerCommand(prompt("It is your turn. Would you like to attack, defend, heal, or cast?"))
-        opponentCommand(cpuDecide(alert("It is now computer's turn")))
-        console.log(playerHp, opponentHp)
-        
+        playerCommand(prompt("It is your turn. Would you like to attack, defend, heal, or cast?"));
+        opponentCommand(cpuDecide(alert("It is now computer's turn")));
+        alert("Your current HP:" + " " + playerHp);
+        alert("Opponent's current HP:" + " " + opponentHp);
+        console.log("Your current HP:" + " " + " " + playerHp, "Opponent's current HP:" + " " + opponentHp);
     }
 
     else if( turnCounter == 1){
-        turnCounter = 0
-        alert("It is computer's turn")
-        opponentCommand(cpuDecide())
-        playerCommand(prompt("It's your turn.  Would you like to attack, defend, heal, or cast?"))
-        turnCounter ++
-        console.log(playerHp, opponentHp)
+        turnCounter = 0;
+        alert("It is computer's turn");
+        opponentCommand(cpuDecide());
+        playerCommand(prompt("It's your turn.  Would you like to attack, defend, heal, or cast?"));
+        turnCounter ++;
+        alert("Your current HP:" + " " + playerHp);
+        alert("Opponent's current HP:" + " " + opponentHp);
+        console.log("Your current HP:" + " " + " " + playerHp, "Opponent's current HP:" + " " + opponentHp);
     } 
 }
 
 function gameBattle(){
     alert("Your beginning health is " + playerHp + " lifepoints.");
-    alert("Opponent's begginning health is " + opponentHp + " lifepoints.")
-    whoGoFirst()
+    alert("Opponent's beginning health is " + opponentHp + " lifepoints.");
+    whoGoFirst();
     while(opponentHp > 0 && playerHp > 0){
-        turnOrder()
+        turnOrder();
         if( opponentHp <= 0 || playerHp <= 0){
-            alert("Chance to revive.")
-            survive()
+            alert("Chance to revive.");
+            survive();
         }
         else{
         }
     }
+    alert("Your current HP:" + " " + playerHp);
+    alert("Opponent's current HP:" + " " + opponentHp);
+    console.log("Your current HP:" + " " + " " + playerHp, "Opponent's current HP:" + " " + opponentHp);
 }
 gameBattle()
 
 function survive(){
     if(rollDice(7) === 7){
-        playerHp += 30
-        opponentHp += 30;
-        alert("Battle continues. Now FIGHT!!")
-        return playerHp, opponentHp
-        
+        playerHp += 50;
+        opponentHp += 50;
+        alert("Battle continues. Now FIGHT!!");
+        return playerHp, opponentHp;
+    }
+    else if(playerHp <= 0){
+        alert("Sorry you did not revive. Your dead.  GAME OVER!!");
+        console.log("Sorry you did not revive. Your dead.  GAME OVER!!");
+    }
+    else if(opponentHp <= 0){
+        alert("Congratulation!! YOU WIN!! Opponnent did not revive.");
+        console.log("Congratulation!! YOU WIN!! Opponnent did not revive.");
     }
     else{
-        console.log("GAME OVER!!!")
-    }console.log(playerHp, opponentHp)
+    }
 }
-
